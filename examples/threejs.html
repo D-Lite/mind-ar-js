@@ -1,0 +1,61 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r127/three.min.js" integrity="sha512-U4J4PbEJ2TMjFqPUSiKq7LLTHuEkPZVo0jl2fomi9pT7UAExh4xVi8KmoR7EfmyigH95aA68zpW7y3XzuoSurQ==" crossorigin="anonymous"></script>
+    <script src="../dist-dev/mindar.js"></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', async() => {
+	const container = document.getElementById("container");
+	const arContainer = new MINDAR.ThreeARContainer(container, {imageTargetSrc: '../examples/assets/card-example/card.mind'});
+
+	container.addEventListener('arReady', () => {
+	  console.log("ar ready");
+
+	  const {scene, camera, renderer} = arContainer.getComponents();
+	  const anchor = arContainer.createAnchor(0);
+
+	  // add a semi-transparent plane to the anchor
+	  const geometry = new THREE.PlaneGeometry(1, 0.552);
+	  const material = new THREE.MeshBasicMaterial( {color: 0x0000ff, opacity: 0.5} );
+	  const cube = new THREE.Mesh( geometry, material );
+	  anchor.add(cube);
+
+	  // start rendering loop
+	  renderer.setAnimationLoop(() => {
+	    renderer.render(scene, camera);
+	  });
+	});
+
+	container.addEventListener('arError', (e) => {
+	  console.log("failed", e.detail);
+	});
+
+	container.addEventListener("targetFound", (e) => {
+	  console.log("target found", e.detail.targetIndex);
+	});
+
+	container.addEventListener("targetLost", (e) => {
+	  console.log("target lost", e.detail.targetIndex);
+	});
+
+	arContainer.start();
+      });
+    </script>
+
+    <style>
+      #container {
+	position: relative;
+	width: 640;
+	height: 360;
+	height: 640;
+	overflow: hidden;
+	width: 100vw;
+	height: 100vh;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container"></div>
+  </body>
+</html>
