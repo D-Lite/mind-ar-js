@@ -135,6 +135,7 @@ AFRAME.registerSystem('mindar-system', {
 	}
       }
     });
+    this.controller.interestedTargetIndex = 1;
 
     const proj = this.controller.getProjectionMatrix();
     const fov = 2 * Math.atan(1/proj[5] / vh * container.clientHeight ) * 180 / Math.PI; // vertical fov

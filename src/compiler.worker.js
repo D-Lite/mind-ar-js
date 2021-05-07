@@ -7,7 +7,7 @@ const tf = require('@tensorflow/tfjs');
 onmessage = (msg) => {
   const {data} = msg;
   if (data.type === 'compile') {
-    console.log("worker compile...");
+    //console.log("worker compile...");
 
     const {targetImages} = data;
     const percentPerImage = 100.0 / targetImages.length;
@@ -18,16 +18,16 @@ onmessage = (msg) => {
       const imageList = buildImageList(targetImage);
       const percentPerAction = percentPerImage / imageList.length / 2;
 
-      console.log("compiling tracking...", i);
+      //console.log("compiling tracking...", i);
       const trackingData = _extractTrackingFeatures(imageList, (index) => {
-	console.log("done tracking", i, index);
+	//console.log("done tracking", i, index);
 	percent += percentPerAction;
 	postMessage({type: 'progress', percent: percent});
       });
 
-      console.log("compiling matching...", i);
+      //console.log("compiling matching...", i);
       const matchingData = _extractMatchingFeatures(imageList, (index) => {
-	console.log("done matching", i, index);
+	//console.log("done matching", i, index);
 	percent += percentPerAction;
 	postMessage({type: 'progress', percent: percent});
       });
