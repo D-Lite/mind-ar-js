@@ -139,6 +139,7 @@ class ThreeARContainer {
 	  this._updateAnchor({targetIndex, worldMatrix});
 	}
       }});
+      controller.interestedTargetIndex = 0;
       const {dimensions} = await controller.addImageTargets(this.imageTargetSrc);
       resolve({controller, dimensions});
     });

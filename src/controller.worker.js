@@ -30,7 +30,7 @@ onmessage = (msg) => {
     }
 
     for (let i = 0; i < matchingDataList.length; i++) {
-      if (interestedTargetIndex && interestedTargetIndex !== i) continue;
+      if (interestedTargetIndex !== null && interestedTargetIndex !== i) continue;
       if (skipTargetIndexes.includes(i)) continue;
 
       const {keyframeIndex, screenCoords, worldCoords, debugExtra} = matcher.matchDetection(matchingDataList[i], data.featurePoints);
